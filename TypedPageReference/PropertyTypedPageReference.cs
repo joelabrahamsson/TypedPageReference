@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
@@ -32,14 +33,16 @@ namespace TypedPageReference
         {
             return
                 string.Format(
-                    GetWrongTypeErrorMessageTemplate(), GetValidPageTypesList());
+                    CultureInfo.InvariantCulture,
+                    GetWrongTypeErrorMessageTemplate(), 
+                    GetValidPageTypesList());
         }
 
         protected virtual string GetWrongTypeErrorMessageTemplate()
         {
-            if (!string.IsNullOrEmpty(GetWrongTypeErrorMessageLanguageKey()))
+            if (!string.IsNullOrEmpty(WrongTypeErrorMessageLanguageKey))
             {
-                string template = LanguageManager.Instance.Translate(GetWrongTypeErrorMessageLanguageKey());
+                string template = LanguageManager.Instance.Translate(WrongTypeErrorMessageLanguageKey);
                 if (!string.IsNullOrEmpty(template))
                     return template;
             }
@@ -61,9 +64,9 @@ namespace TypedPageReference
             return validPageTypes.ToString();
         }
 
-        protected virtual string GetWrongTypeErrorMessageLanguageKey()
+        protected virtual string WrongTypeErrorMessageLanguageKey
         {
-            return null;
+            get { return null; }
         }
 
         public virtual IEnumerable<Type> GetValidTypes()

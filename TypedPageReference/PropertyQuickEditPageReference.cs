@@ -11,16 +11,16 @@ namespace TypedPageReference
             return new PropertyQuickEditPageReferenceControl<T>
                        {
                            QuickEditLinkText = GetQuickEditLinkText(),
-                           PopupWidth = GetPopupWidth(),
-                           PopupHeight = GetPopupHeight()
+                           PopupWidth = PopupWidth,
+                           PopupHeight = PopupHeight
                        };
         }
 
         protected virtual string GetQuickEditLinkText()
         {
-            if (!string.IsNullOrEmpty(GetQuickEditLinkTextLanguageKey()))
+            if (!string.IsNullOrEmpty(QuickEditLinkTextLanguageKey))
             {
-                string linkText = LanguageManager.Instance.Translate((GetQuickEditLinkTextLanguageKey()));
+                string linkText = LanguageManager.Instance.Translate(QuickEditLinkTextLanguageKey);
                 if (!string.IsNullOrEmpty(linkText))
                     return linkText;
             }
@@ -28,19 +28,19 @@ namespace TypedPageReference
             return "Quick edit";
         }
 
-        protected virtual string GetQuickEditLinkTextLanguageKey()
+        protected virtual string QuickEditLinkTextLanguageKey
         {
-            return null;
+            get { return null; }
         }
 
-        protected virtual int GetPopupWidth()
+        protected virtual int PopupWidth
         {
-            return 700;
+            get { return 700; }
         }
 
-        protected virtual int GetPopupHeight()
+        protected virtual int PopupHeight
         {
-            return 500;
+            get { return 500; }
         }
     }
 }

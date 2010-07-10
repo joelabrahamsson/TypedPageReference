@@ -1,4 +1,5 @@
-﻿using System.Web.UI.WebControls;
+﻿using System.Globalization;
+using System.Web.UI.WebControls;
 using EPiServer;
 using EPiServer.Core;
 
@@ -22,7 +23,9 @@ namespace TypedPageReference
         {
             var quickEditLink = new HyperLink();
             string editLink = 
-                string.Format("javascript:window.open('{0}EditPanel.aspx?id={1}&mode=simpleeditmode','mywindow','width={2},height={3}');",
+                string.Format(
+                CultureInfo.InvariantCulture,  
+                "javascript:window.open('{0}EditPanel.aspx?id={1}&mode=simpleeditmode','mywindow','width={2},height={3}');",
                               UriSupport.ResolveUrlFromUIAsRelativeOrAbsolute("edit/"), 
                               linkedPage.PageLink,
                               PopupWidth, PopupHeight);

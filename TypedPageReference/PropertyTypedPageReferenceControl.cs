@@ -9,7 +9,7 @@ namespace TypedPageReference
         public override void ApplyEditChanges()
         {
             if (!ValidateThatReferencedPageIsOfCorrectType(EditControl.PageLink))
-                AddErrorValidator(GetWrongTypeErrorMessage());
+                AddErrorValidator(WrongTypeErrorMessage);
 
             base.ApplyEditChanges();
         }
@@ -22,14 +22,7 @@ namespace TypedPageReference
             var referencedPage = DataFactory.Instance.GetPage(pageReference);
             return referencedPage is T;
         }
-
-        protected virtual string GetWrongTypeErrorMessage()
-        {
-            
-
-            return WrongTypeErrorMessage;
-        }
-
+        
         public virtual string WrongTypeErrorMessage { get; set; }
     }
 }

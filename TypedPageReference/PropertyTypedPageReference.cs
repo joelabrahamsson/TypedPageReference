@@ -69,7 +69,7 @@ namespace TypedPageReference
             get { return null; }
         }
 
-        public virtual IEnumerable<Type> GetValidTypes()
+        public virtual IEnumerable<PageType> GetValidPageTypes()
         {
             var allPageTypes = PageType.List();
             foreach (var pageType in allPageTypes)
@@ -80,38 +80,16 @@ namespace TypedPageReference
                     continue;
 
                 if (typeof(T).IsAssignableFrom(type))
-                    yield return type;
+                    yield return pageType;
             }
         }
 
         public virtual IEnumerable<string> GetValidPageTypeNames()
         {
-            foreach (var validType in GetValidTypes())
+            foreach (var validPageType in GetValidPageTypes())
             {
-                var pageTypeAttribute = GetAttribute(validType, typeof (PageTypeAttribute)) as PageTypeAttribute;
-
-                if(pageTypeAttribute == null)
-                    continue;
-
-                if (!string.IsNullOrEmpty(pageTypeAttribute.Name))
-                    yield return pageTypeAttribute.Name;
-                else
-                    yield return validType.Name;
+                yield return validPageType.Name;
             }
-        }
-
-        private static Attribute GetAttribute(Type type, Type attributeType)
-        {
-            Attribute attribute = null;
-
-            object[] attributes = type.GetCustomAttributes(true);
-            foreach (object attributeInType in attributes)
-            {
-                if (attributeType.IsAssignableFrom(attributeInType.GetType()))
-                    attribute = (Attribute)attributeInType;
-            }
-
-            return attribute;
         }
     }
 }
